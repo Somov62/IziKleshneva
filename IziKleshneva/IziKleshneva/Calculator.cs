@@ -17,7 +17,7 @@ namespace IziKleshneva
             {
                 int znakIndex = primer.IndexOf("!");
                 int leftBorder = LeftBorderIndex(primer, znakIndex);
-                double num = Convert.ToDouble(primer.Substring(leftBorder, znakIndex - leftBorder));
+                decimal num = decimal.Parse(primer.Substring(leftBorder, znakIndex - leftBorder));
                 primer = primer.Remove(leftBorder, znakIndex - leftBorder + 1);
                 int rez = 1;
                 for (int i = 1; i <= num; i++)
@@ -31,8 +31,13 @@ namespace IziKleshneva
             {
                 int znakIndex = primer.IndexOf("^");
                 int leftBorder = LeftBorderIndex(primer, znakIndex);
-                primer = NewPrimer(primer, leftBorder, znakIndex, out double fNum, out double sNum);
-                primer = primer.Insert(leftBorder, (Math.Pow(fNum, sNum)).ToString());
+                primer = NewPrimer(primer, leftBorder, znakIndex, out decimal fNum, out decimal sNum);
+                decimal result = 1;
+                for (int i = 0; i < sNum; i++)
+                {
+                    result *= fNum;
+                }
+                primer = primer.Insert(leftBorder, result.ToString());
             }
 
             //решаем умножение/деление
@@ -42,7 +47,7 @@ namespace IziKleshneva
                 int znakIndex = primer.IndexOfAny(simbols, 1);
                 int leftBorder = LeftBorderIndex(primer, znakIndex);
                 char znak = primer[znakIndex];
-                primer = NewPrimer(primer, leftBorder, znakIndex, out double fNum, out double sNum);
+                primer = NewPrimer(primer, leftBorder, znakIndex, out decimal fNum, out decimal sNum);
                 if (znak == '×') primer = primer.Insert(leftBorder, ((fNum * sNum)).ToString());
                 else primer = primer.Insert(leftBorder, ((fNum / sNum)).ToString());
             }
@@ -54,7 +59,7 @@ namespace IziKleshneva
                 int znakIndex = primer.IndexOfAny(simbols, 1);
                 int leftBorder = LeftBorderIndex(primer, znakIndex);
                 char znak = primer[znakIndex];
-                primer = NewPrimer(primer, leftBorder, znakIndex, out double fNum, out double sNum);
+                primer = NewPrimer(primer, leftBorder, znakIndex, out decimal fNum, out decimal sNum);
                 if (znak == '+') primer = primer.Insert(leftBorder, ((fNum + sNum)).ToString());
                 else primer = primer.Insert(leftBorder, ((fNum - sNum)).ToString());
             }
@@ -64,11 +69,11 @@ namespace IziKleshneva
         /// Метод выделяющий из примера единичное действия типа "хRу", где R - знак арифметического действия. Метод наход x, y и возвращает их. 
         /// Также вырезает из примера действие "xRy" для последующей вставки результата вычислений.
         /// </summary>        
-        private static string NewPrimer(string primer, int lBorder, int i, out double fNum, out double sNum)
+        private static string NewPrimer(string primer, int lBorder, int i, out decimal fNum, out decimal sNum)
         {
             int rBorder = RightBorderIndex(primer, i);//находим правую границу правого от знака числа
-            fNum = Convert.ToDouble(primer.Substring(lBorder, i - lBorder));//получаем первое число
-            sNum = Convert.ToDouble(primer.Substring(i + 1, rBorder - i));//получаем второе
+            fNum = decimal.Parse(primer.Substring(lBorder, i - lBorder));//получаем первое число
+            sNum = decimal.Parse(primer.Substring(i + 1, rBorder - i));//получаем второе
             primer = primer.Remove(lBorder, rBorder - lBorder + 1);//вырезаем все действие
             return primer;//возвращаем строку с вырезанным действием и два числа для последущего действия с ними
         }

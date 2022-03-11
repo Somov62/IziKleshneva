@@ -7,12 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-
+using System.Globalization;
 
 namespace IziKleshneva
 {
     public partial class MainPage : ContentPage
     {
+        private int _decimalCount = 4;
         public MainPage()
         {
             InitializeComponent();
@@ -21,10 +22,31 @@ namespace IziKleshneva
         private void Solve_Click(object sender, EventArgs e)
         {
             string equlation = txtEquation.Text.Replace("=0", "");
+            for (int i = 0; i < equlation.Length; i++)
+            {
+                if (equlation[i] == 'x')
+                {
+                    try
+                    {
+                        if (char.IsDigit(equlation[i - 1])) equlation = equlation.Insert(i, "*");
+                    }
+                    catch { }
+                }
+            }
             equlation = equlation.Replace(" ", "");
-            if (!double.TryParse(txtInterval1.Text, out double interval1)
-                | !double.TryParse(txtInterval2.Text, out double interval2)
-                | !double.TryParse(txtEpsilon.Text, out double epsilon))
+            if (!int.TryParse(txtZnaki.Text, out int zCount))
+            {
+                return;
+            }
+            if (zCount > 4) _decimalCount = zCount;
+            else
+            {
+                txtZnaki.Text = 4.ToString();
+                _decimalCount = 4;
+            }
+            if (!decimal.TryParse(txtInterval1.Text, out decimal interval1)
+                | !decimal.TryParse(txtInterval2.Text, out decimal interval2)
+                | !decimal.TryParse(txtEpsilon.Text, out decimal epsilon))
             {
                 return;
             }
@@ -60,16 +82,16 @@ namespace IziKleshneva
             //           2
 
 
-            double a = interval1;
-            double b = interval2;
+            decimal a = interval1;
+            decimal b = interval2;
             
 
             while (true)
             {
-                double c = a + (Math.Abs(b - a) / 2);
-
-                double delta = Math.Abs(b - c);
-
+                decimal c = decimal.Parse((a + (Math.Abs(b - a) / 2)).ToString());
+                c = Math.Round(c, _decimalCount);
+                decimal delta = decimal.Parse(Math.Abs(b - c).ToString());
+                delta = Math.Round(delta, _decimalCount);
                 step3Stack.Children.Add(new Label() { Text = $"C = {a} + |{b} - {a}| ÷ 2 = " + c});
                 step3Stack.Children.Add(new Label() { Text = DeltaToView(c, b, epsilon) });
                 if (delta <= epsilon)
@@ -94,7 +116,7 @@ namespace IziKleshneva
                 }
                 else
                 {
-                   a = c;
+                    a = c;
                 }
                 step3Stack.Children.Add(new Label() { Text = $"Следующий отрезок: [{a} ; {b}]" });
                 step3Stack.Children.Add(new Label() { Text = $" " });
@@ -104,7 +126,7 @@ namespace IziKleshneva
 
         }
 
-        private bool Step2(string equlation, double interval1, double interval2)
+        private bool Step2(string equlation, decimal interval1, decimal interval2)
         {
             string f1 = FormulaToView(equlation, interval1);
             string f2 = FormulaToView(equlation, interval2);
@@ -119,21 +141,21 @@ namespace IziKleshneva
             return false;
         }
 
-        private string FormulaToView(string equlation, double value)
+        private string FormulaToView(string equlation, decimal value)
         {
             string primer = equlation.Replace("x", value.ToString());
-            double result1 = Convert.ToDouble(Calculator.SolvePrimer(primer));
-            result1 = Math.Round(result1, 4);
+            decimal result1 = decimal.Parse(Calculator.SolvePrimer(primer));
+            result1 = Math.Round(result1, _decimalCount);
             string sxod1 = "";
             if (result1 < 0) sxod1 = " < 0";
             if (result1 > 0) sxod1 = " > 0";
             return $"f({value}) = {primer} = " + result1 + sxod1;
         }
 
-        private string DeltaToView(double c1, double c2, double epsilon)
+        private string DeltaToView(decimal c1, decimal c2, decimal epsilon)
         {
-            double result1 = Math.Abs(c2 - c1);
-            result1 = Math.Round(result1, 4);
+            decimal result1 = decimal.Parse(Math.Abs(c2 - c1).ToString());
+            result1 = Math.Round(result1, _decimalCount);
             string sxod1 = "";
             if (result1 < epsilon) sxod1 = " < " + epsilon;
             if (result1 > epsilon) sxod1 = " > " + epsilon;
@@ -160,6 +182,23 @@ namespace IziKleshneva
                 if (symbols.Contains(txtEquation.Text[i])) continue;
                 txtEquation.Text = txtEquation.Text.Remove(i);
             }
+        }
+
+        private void txtEpsilon_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtEpsilon.Text.Length < 3) return;
+            if (txtEpsilon.Text.IndexOf(",") == -1) return;
+            int count = txtEpsilon.Text.Substring(txtEpsilon.Text.IndexOf(",") + 1).Length;
+            if (count > 4)
+            {
+                _decimalCount = count;
+            }
+            else
+            {
+                _decimalCount = 4;
+                count = 4;
+            }
+            txtZnaki.Text = count.ToString();
         }
     }
 
