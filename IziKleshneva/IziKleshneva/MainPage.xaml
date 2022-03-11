@@ -1,80 +1,95 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="IziKleshneva.MainPage">
+             xmlns:pages="clr-namespace:IziKleshneva"
+             x:Class="IziKleshneva.MainPage"
+       FlyoutBackgroundColor="#333333">
+    <Shell.Resources>
+        <Style TargetType="Label"
+       Class="FlyoutItemLabelStyle">
+            <Setter Property="TextColor"
+            Value="DeepPink" />
+            <Setter Property="HeightRequest"
+            Value="100" />
+            <Setter Property="FontSize" Value="17" />
+        </Style>
 
-    <ScrollView  x:Name="scroll" BackgroundColor="#333333">
+        <Style TargetType="Image"
+       Class="FlyoutItemImageStyle">
+            <Setter Property="Aspect" Value="AspectFit" />
+        </Style>
 
-        <StackLayout Spacing="0">
-            <Frame BackgroundColor="Lime" Padding="0" CornerRadius="0">
-                <Frame BackgroundColor="#FF222222"  Padding="24" CornerRadius="0">
-                    <Frame Padding="0"  CornerRadius="5">
-                        <Grid Padding="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="0.2*"/>
-                            </Grid.ColumnDefinitions>
-                            <Entry x:Name="txtEquation" BackgroundColor="#FFFFFFF" Grid.Column="0" Keyboard="Plain"  TextChanged="txtEquation_TextChanged" PlaceholderColor="#FFFFFF"/>
-                            <Button  Clicked="Solve_Click" Text="=>" CornerRadius="0" TextColor="White" BackgroundColor="MediumVioletRed" Grid.Column="1"/>
-
-                        </Grid>
-                    </Frame>
-                </Frame>
-            </Frame>
-            <Frame BackgroundColor="#FF222222" Padding="24,0, 24, 10" CornerRadius="0">
-                <Frame Padding="0"  CornerRadius="5" BackgroundColor="Transparent">
-                    <Grid Padding="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="1.6*"/>
-                        </Grid.ColumnDefinitions>
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="[" TextColor="White" FontSize="30" VerticalTextAlignment="Center" />
-                            <Entry x:Name="txtInterval1" TextColor="White"  Keyboard="Numeric" HorizontalOptions="FillAndExpand" MaxLength="4" HorizontalTextAlignment="Center"/>
-                            <Label Text=";" TextColor="White" FontSize="30" VerticalTextAlignment="Center" />
-                            <Entry x:Name="txtInterval2" TextColor="White"  Keyboard="Numeric" HorizontalOptions="FillAndExpand" MaxLength="4" HorizontalTextAlignment="Center"/>
-                            <Label Text="]" TextColor="White" FontSize="30" VerticalTextAlignment="Center" />
-                        </StackLayout>
-                        <StackLayout Orientation="Horizontal" Grid.Column="1">
-                            <Label Text="Точность:" TextColor="White" FontSize="20" Margin="20, 0, 10, 0" VerticalTextAlignment="Center" />
-                            <Frame CornerRadius="5" Padding="0" Margin="5,5, 5, 0" HorizontalOptions="FillAndExpand"  >
-                                <Entry x:Name="txtEpsilon"  HeightRequest="40" VerticalOptions="End" Keyboard="Numeric" TextChanged="txtEpsilon_TextChanged" HorizontalTextAlignment="Center"/>
-                            </Frame>
-                            
-                        </StackLayout>
-                    </Grid>
-                </Frame>
-            </Frame>
-            <Frame BackgroundColor="#FF222222" Padding="24,0, 24, 10" CornerRadius="0">
-                <Frame Padding="0"  CornerRadius="5" BackgroundColor="Transparent">
-                    <Grid Padding="0">
-                        
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="Знаков после запятой:" TextColor="White" FontSize="20" Margin="20, 0, 10, 0" VerticalTextAlignment="Center" />
-                            <Frame CornerRadius="5" Padding="0" Margin="5,5, 5, 0" HorizontalOptions="FillAndExpand"  >
-                                <Entry x:Name="txtZnaki" Text="4"  HeightRequest="40" VerticalOptions="End" Keyboard="Numeric" HorizontalTextAlignment="Center"/>
-                            </Frame>
-                        </StackLayout>
-                    </Grid>
-                </Frame>
-            </Frame>
-            <StackLayout>
-                <StackLayout.Resources>
-                    <Style TargetType="Label">
-                        <Setter Property="TextColor" Value="White" />
-                        <Setter Property="FontSize" Value="16" />
-                    </Style>
-                </StackLayout.Resources>
-                <StackLayout x:Name="step1Stack" Padding="24, 12, 24, 0" >
-                    <Label Text="Первый шаг - переменные" TextColor="DeepPink" FontSize="20" FontAttributes="Bold" />
-                </StackLayout>
-                <StackLayout x:Name="step2Stack" Padding="24, 12, 24, 0">
-                    <Label Text="Второй шаг - условие сходимости" TextColor="DeepPink" FontSize="20" FontAttributes="Bold" />
-                </StackLayout>
-                <StackLayout x:Name="step3Stack" Padding="24, 12, 24, 24">
-                    <Label Text="Третий шаг - действие по методу" TextColor="DeepPink" FontSize="20" FontAttributes="Bold" />
-                </StackLayout>
-            </StackLayout>
+        <Style TargetType="Layout"
+       Class="FlyoutItemLayoutStyle"
+       ApplyToDerivedTypes="True">
+            <Setter Property="BackgroundColor"
+            Value="#555555" />
+        </Style>
+    </Shell.Resources>
+    <Shell.FlyoutHeader>
+        <StackLayout BackgroundColor="#FF333333" Padding="10, 30">
+            <Label Text="Меню" TextColor="DeepPink" HorizontalOptions="Center" FontSize="30"/>
         </StackLayout>
-    </ScrollView>
-</ContentPage>
+    </Shell.FlyoutHeader>
+    <FlyoutItem Title="Метод половинного деления" >
+        <ShellContent Title="Метод половинного деления" ContentTemplate="{DataTemplate pages:Method1}"/>
+    </FlyoutItem>
+    <FlyoutItem Title="Метод хорд">
+        <ShellContent ContentTemplate="{DataTemplate pages:Method2}"/>
+    </FlyoutItem>
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid x:Name="FlyoutItemLayout"
+          HeightRequest="{x:OnPlatform Android=50}"
+          ColumnSpacing="{x:OnPlatform UWP=0}"
+          RowSpacing="{x:OnPlatform UWP=0}">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor"
+                                    Value="{x:OnPlatform Android=#FF1493, iOS=#F2F2F2}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+
+                <Label x:Name="FlyoutItemLabel"
+               Text="{Binding Title}"
+               FontSize="{x:OnPlatform Android=14, iOS=Small}"
+               HorizontalOptions="{x:OnPlatform UWP=Start}"
+               HorizontalTextAlignment="{x:OnPlatform UWP=Start}"
+               FontAttributes="{x:OnPlatform iOS=Bold}"
+               VerticalTextAlignment="Center">
+                    <Label.TextColor>
+                        <OnPlatform x:TypeArguments="Color">
+                            <OnPlatform.Platforms>
+                                <On Platform="Android"
+                            Value="#FFFFFF" />
+                            </OnPlatform.Platforms>
+                        </OnPlatform>
+                    </Label.TextColor>
+                    <Label.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <OnPlatform.Platforms>
+                                <On Platform="Android"
+                            Value="20, 0, 0, 0" />
+                            </OnPlatform.Platforms>
+                        </OnPlatform>
+                    </Label.Margin>
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <OnPlatform.Platforms>
+                                <On Platform="Android"
+                            Value="sans-serif-medium" />
+                            </OnPlatform.Platforms>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+</Shell>
