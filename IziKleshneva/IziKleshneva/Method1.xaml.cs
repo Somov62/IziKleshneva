@@ -14,6 +14,20 @@ namespace IziKleshneva
     public partial class Method1 : ContentPage
     {
         private int _decimalCount = 4;
+        private Dictionary<decimal, decimal> _decimalMemory;
+        private Dictionary<int, string> _subscripts = new Dictionary<int, string>()
+        {
+            {1, "₁" },
+            {2, "₂" },
+            {3, "₃" },
+            {4, "₄" },
+            {5, "₅" },
+            {6, "₆" },
+            {7, "₇" },
+            {8, "₈" },
+            {9, "₉" },
+            {0, "₀" }
+        };
         public Method1()
         {
             InitializeComponent();
@@ -72,6 +86,7 @@ namespace IziKleshneva
             #endregion
 
             #region Step 2
+            _decimalMemory = new Dictionary<decimal, decimal>();
             bool IsСonditionComplete = Step2(equlation, interval1, interval2);
             if (!IsСonditionComplete) return;
             #endregion
@@ -86,7 +101,7 @@ namespace IziKleshneva
             decimal b = interval2;
             decimal oldDelta = 0;
             int counterPovt = 0;
-
+            int counterRoots = 1;
             while (true)
             {
                 decimal c = decimal.Parse((a + (Math.Abs(b - a) / 2)).ToString());
@@ -108,7 +123,7 @@ namespace IziKleshneva
                     oldDelta = delta;
                     counterPovt = 0;
                 }
-                step3Stack.Children.Add(new Label() { Text = $"C = {a} + |{b} - {a}| ÷ 2 = " + c });
+                step3Stack.Children.Add(new Label() { Text = $"C{GetSubscripts(counterRoots)} = {a} + |{b} - {a}| ÷ 2 = " + c });
                 step3Stack.Children.Add(new Label() { Text = DeltaToView(c, b, epsilon) });
                 if (delta <= epsilon)
                 {
@@ -119,23 +134,51 @@ namespace IziKleshneva
                 Label label = step3Stack.Children[step3Stack.Children.Count - 1] as Label;
                 label.Text += " (Можно не писать)";
                 label.TextColor = Color.Gray;
+                step3Stack.Children.Add(new Label() { Text = $" ", Margin = new Thickness(0, -7) });
                 string f1 = FormulaToView(equlation, a);
                 string f2 = FormulaToView(equlation, c);
                 string f3 = FormulaToView(equlation, b);
-                step3Stack.Children.Add(new Label() { Text = f1 });
-                step3Stack.Children.Add(new Label() { Text = f2 });
-                step3Stack.Children.Add(new Label() { Text = f3 });
-
                 if (CheckConvergenceCondition(f1, f2))
                 {
+                    StackLayout fstack = new StackLayout();
+                    fstack.Orientation = StackOrientation.Horizontal;
+                    fstack.Children.Add(new Label() { Text = f1.Remove(f1.Length - 3) });
+                    fstack.Children.Add(new Label() { Text = f1.Substring(f1.Length - 3), TextColor = Color.LawnGreen, VerticalTextAlignment = TextAlignment.End, MinimumWidthRequest = 30 });
+                    step3Stack.Children.Add(fstack);
+                    fstack = new StackLayout();
+                    fstack.Orientation = StackOrientation.Horizontal;
+                    fstack.Children.Add(new Label() { Text = f2.Remove(f2.Length - 3) });
+                    fstack.Children.Add(new Label() { Text = f2.Substring(f2.Length - 3), TextColor = Color.LawnGreen, VerticalTextAlignment = TextAlignment.End, MinimumWidthRequest = 30 });
+                    step3Stack.Children.Add(fstack);
+                    fstack = new StackLayout();
+                    fstack.Orientation = StackOrientation.Horizontal;
+                    fstack.Children.Add(new Label() { Text = f3.Remove(f3.Length - 3) });
+                    fstack.Children.Add(new Label() { Text = f3.Substring(f3.Length - 3), TextColor = Color.Red, VerticalTextAlignment = TextAlignment.End, MinimumWidthRequest = 30 });
+                    step3Stack.Children.Add(fstack);
                     b = c;
                 }
                 else
                 {
+                    StackLayout fstack = new StackLayout();
+                    fstack.Orientation = StackOrientation.Horizontal;
+                    fstack.Children.Add(new Label() { Text = f1.Remove(f1.Length - 3) });
+                    fstack.Children.Add(new Label() { Text = f1.Substring(f1.Length - 3), TextColor = Color.Red, VerticalTextAlignment = TextAlignment.End, MinimumWidthRequest = 30 });
+                    step3Stack.Children.Add(fstack);
+                    fstack = new StackLayout();
+                    fstack.Orientation = StackOrientation.Horizontal;
+                    fstack.Children.Add(new Label() { Text = f2.Remove(f2.Length - 3) });
+                    fstack.Children.Add(new Label() { Text = f2.Substring(f2.Length - 3), TextColor = Color.LawnGreen, VerticalTextAlignment = TextAlignment.End, MinimumWidthRequest = 30 });
+                    step3Stack.Children.Add(fstack);
+                    fstack = new StackLayout();
+                    fstack.Orientation = StackOrientation.Horizontal;
+                    fstack.Children.Add(new Label() { Text = f3.Remove(f3.Length - 3) });
+                    fstack.Children.Add(new Label() { Text = f3.Substring(f3.Length - 3), TextColor = Color.LawnGreen, VerticalTextAlignment = TextAlignment.End, MinimumWidthRequest = 30 });
+                    step3Stack.Children.Add(fstack);
                     a = c;
                 }
                 step3Stack.Children.Add(new Label() { Text = $"Следующий отрезок: [{a} ; {b}]" });
-                step3Stack.Children.Add(new Label() { Text = $" " });
+                step3Stack.Children.Add(new Frame() { HeightRequest = 1, BackgroundColor = Color.DeepPink, CornerRadius = 3, Padding = new Thickness(0), Margin = new Thickness(0, 10) });
+                counterRoots++;
             }
 
             #endregion
@@ -156,19 +199,44 @@ namespace IziKleshneva
             step2Stack.Children.Add(new Label() { Text = "Условие на сходимость не выполнено", FontSize = 18 });
             return false;
         }
-        
-        private string FormulaToView(string equlation, decimal value)
+        private string GetSubscripts(int number)
         {
+            string result = string.Empty;
+            while (number != 0)
+            {
+                result = result.Insert(0, _subscripts[number % 10]);
+                number /= 10;
+            }
+            return result;
+        }
+        private decimal CalculateFormula(string equlation, decimal value)
+        {
+            if (_decimalMemory.TryGetValue(value, out decimal result))
+            {
+                return result;
+            }
             string strvalue = value.ToString();
             if (value < 0) strvalue = value.ToString().Replace("-", "~");
             string primer = equlation.Replace("x", strvalue);
             decimal result1 = decimal.Parse(Calculator.SolvePrimer(primer));
             result1 = Math.Round(result1, _decimalCount);
-            primer = primer.Replace("*", "×").Replace("~", "-");
-            string sxod1 = "";
-            if (result1 < 0) sxod1 = " < 0";
-            if (result1 > 0) sxod1 = " > 0";
-            return $"f({value}) = {primer} = " + result1 + sxod1;
+            _decimalMemory.Add(value, result1);
+            return result1;
+        }
+        private string FormulaToView(string equlation, decimal value)
+        {
+            string strvalue = value.ToString();
+            string primer = equlation.Replace("x", strvalue);
+            if (_decimalMemory.TryGetValue(value, out decimal result))
+            {
+                return $"f({value}) = {result} {(result < 0 ? "<" : ">")} 0";
+            }
+            decimal result1 = CalculateFormula(equlation, value);
+            primer = primer.Replace("*", " × ").Replace("~", "-");
+            primer = primer.Replace("+", " + ").Replace("^", " ^");
+            result1 = Math.Round(result1, _decimalCount);
+            primer += " = " + result1;
+            return $"f({value}) = {primer} {(result1 < 0 ? "<" : ">")} 0";
         }
 
         private string DeltaToView(decimal c1, decimal c2, decimal epsilon)
@@ -178,6 +246,7 @@ namespace IziKleshneva
             string sxod1 = "";
             if (result1 < epsilon) sxod1 = " < " + epsilon;
             if (result1 > epsilon) sxod1 = " > " + epsilon;
+            if (result1 == epsilon) sxod1 = " = " + epsilon;
             return $"ΔС = |{c2} - {c1}| = " + result1 + sxod1;
         }
 

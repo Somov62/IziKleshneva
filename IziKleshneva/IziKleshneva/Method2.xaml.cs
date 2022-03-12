@@ -14,6 +14,20 @@ namespace IziKleshneva
     public partial class Method2 : ContentPage
     {
         private int _decimalCount = 4;
+        private Dictionary<decimal, decimal> _decimalMemory;
+        private Dictionary<int, string> _subscripts = new Dictionary<int, string>()
+        {
+            {1, "₁" },
+            {2, "₂" },
+            {3, "₃" },
+            {4, "₄" },
+            {5, "₅" },
+            {6, "₆" },
+            {7, "₇" },
+            {8, "₈" },
+            {9, "₉" },
+            {0, "₀" }
+        };
         public Method2()
         {
             InitializeComponent();
@@ -72,6 +86,7 @@ namespace IziKleshneva
             step1Stack.Children.Add(new Label() { Text = "Е = " + epsilon });
             #endregion
             #region Step 2
+            _decimalMemory = new Dictionary<decimal, decimal>();
             bool IsСonditionComplete = Step2(equlation, interval1, interval2);
             if (!IsСonditionComplete) return;
             #endregion
@@ -86,128 +101,159 @@ namespace IziKleshneva
             decimal a = interval1;
             decimal b = interval2;
 
-            step3Stack.Children.Add(new Label() { Text = $"Формула: Ψ = a - f(a) ÷ (f(b)-f(a)) × (b - a) "});
-            step3Stack.Children.Add(new Label() { Text = $"Справка: Ψ - знак пси; знак ÷ в виде дробной черты"});
+            step3Stack.Children.Add(new Label() { Text = $"Формула: ξ = a - f(a) ÷ (f(b)-f(a)) × (b - a) " });
+            step3Stack.Children.Add(new Label() { Text = $"Справка: ξ - знак кси; знак ÷ в виде дробной черты" });
+            step3Stack.Children.Add(new Frame() { HeightRequest = 1, BackgroundColor = Color.DeepPink, CornerRadius = 3, Padding = new Thickness(0), Margin = new Thickness(0, 10) });
             step3Stack.Children.Add(new Label() { Text = $" "});
 
             decimal oldDelta = 0;
+            decimal oldс = 0;
             int counterPovt = 0;
+            int counterRoots = 1;
+            
             while (true)
             {
-                decimal fa = CalculateFormula(equlation, a); 
-                decimal fb = CalculateFormula(equlation, b); 
+                decimal fa = CalculateFormula(equlation, a);
+                decimal fb = CalculateFormula(equlation, b);
                 decimal c = decimal.Parse((a - fa / (fb - fa) * (b - a)).ToString());
                 c = Math.Round(c, _decimalCount);
-                step3Stack.Children.Add(new Label() { Text = $"Ψ = {a} - {fa} ÷ ({fb} - {fa}) × ({b} - {a}) ≈ " + c });
-
-                decimal delta = decimal.Parse(Math.Abs(c - a).ToString());
-                delta = Math.Round(delta, _decimalCount);
-                if (oldDelta == delta)
+                step3Stack.Children.Add(new Label() { Text = $"ξ{GetSubscripts(counterRoots)} = {a} - {fa} ÷ ({fb} - {fa}) × ({b} - {a}) ≈ " + c });
+                if (oldс != 0)
                 {
-                    counterPovt++;
-                    if (counterPovt > 3)
+                    decimal delta = decimal.Parse(Math.Abs(c - oldс).ToString());
+                    delta = Math.Round(delta, _decimalCount);
+                    if (oldDelta == delta)
                     {
-                        step3Stack.Children.Add(new Label() { Text = "Корень: " + c });
-                        step3Stack.Children.Add(new Label() { Text = "Внимание! Точность не достигнута! Попробуйте увеличить количество знаков после запятой." });
-                        return;
+                        counterPovt++;
+                        if (counterPovt > 3)
+                        {
+                            step3Stack.Children.Add(new Label() { Text = "Корень: " + c });
+                            step3Stack.Children.Add(new Label() { Text = "Внимание! Точность не достигнута! Попробуйте увеличить количество знаков после запятой." });
+                            return;
+                        }
                     }
+                    else
+                    {
+                        oldDelta = delta;
+                        counterPovt = 0;
+                    }
+                    step3Stack.Children.Add(new Label() { Text = DeltaToView(oldс, c, epsilon) });
+                    if (delta <= epsilon)
+                    {
+                        step3Stack.Children.Add(new Label() { Text = "Точность достигнута" });
+                        step3Stack.Children.Add(new Label() { Text = "Корень: " + c });
+                        break;
+                    }
+                    Label label = step3Stack.Children[step3Stack.Children.Count - 1] as Label;
+                    label.Text += " (Можно не писать)";
+                    label.TextColor = Color.Gray;
                 }
-                else 
-                {
-                    oldDelta = delta;
-                    counterPovt = 0;
-                }
-                step3Stack.Children.Add(new Label() { Text = DeltaToView(a, c, epsilon) });
-                if (delta <= epsilon)
-                {
-                    step3Stack.Children.Add(new Label() { Text = "Точность достигнута" });
-                    step3Stack.Children.Add(new Label() { Text = "Корень: " + c });
-                    break;
-                }
-                Label label = step3Stack.Children[step3Stack.Children.Count - 1] as Label;
-                label.Text += " (Можно не писать)";
-                label.TextColor = Color.Gray;
+                step3Stack.Children.Add(new Label() { Text = $" ", Margin = new Thickness(0, -7)});
                 string f1 = FormulaToView(equlation, a);
                 string f2 = FormulaToView(equlation, c);
                 string f3 = FormulaToView(equlation, b);
-                
-                decimal fc = CalculateFormula(equlation, c);
+
+
                 if (CheckConvergenceCondition(f1, f2))
                 {
-                    string uslovie = $"}} f({a}) × f({c}) = {fa} × {fc} = {fa * fc} {(fa * fc < 0 ? "<" : ">")} 0";
-                    if (uslovie.Contains("<")) uslovie += " сходится =>";
-                    else uslovie += " не сходится";
-                    step3Stack.Children.Add(new Label() { Text = f1 });
-                    
-                    step3Stack.Children.Add(new Label()
-                    {
-                        Text = uslovie,
-                        HorizontalOptions = LayoutOptions.End,
-                        Margin = new Thickness(150, -5, 0, -5)
-                    });
-                    step3Stack.Children.Add(new Label() { Text = f2 });
-                    step3Stack.Children.Add(new Label() { Text = f3 });
-                    if (uslovie.Contains("не сходится")) return;
+                    StackLayout fstack = new StackLayout();
+                    fstack.Orientation = StackOrientation.Horizontal;
+                    fstack.Children.Add(new Label() { Text = f1.Remove(f1.Length - 3) });
+                    fstack.Children.Add(new Label() { Text = f1.Substring(f1.Length - 3), TextColor = Color.LawnGreen, VerticalTextAlignment = TextAlignment.End, MinimumWidthRequest = 30 });
+                    step3Stack.Children.Add(fstack);
+                    fstack = new StackLayout();
+                    fstack.Orientation = StackOrientation.Horizontal;
+                    fstack.Children.Add(new Label() { Text = f2.Remove(f2.Length - 3) });
+                    fstack.Children.Add(new Label() { Text = f2.Substring(f2.Length - 3), TextColor = Color.LawnGreen, VerticalTextAlignment = TextAlignment.End, MinimumWidthRequest = 30 });
+                    step3Stack.Children.Add(fstack);
+                    fstack = new StackLayout();
+                    fstack.Orientation = StackOrientation.Horizontal;
+                    fstack.Children.Add(new Label() { Text = f3.Remove(f3.Length - 3) });
+                    fstack.Children.Add(new Label() { Text = f3.Substring(f3.Length - 3), TextColor = Color.Red, VerticalTextAlignment = TextAlignment.End, MinimumWidthRequest = 30 });
+                    step3Stack.Children.Add(fstack);
                     b = c;
                 }
                 else
                 {
-                    string uslovie = $"}} f({c}) × f({b}) = {fc} × {fb} = {fc * fb} {(fb * fc < 0 ? "<" : ">")} 0";
-                    if (uslovie.Contains("<")) uslovie += " сходится =>";
-                    else uslovie += " не сходится";
-                    step3Stack.Children.Add(new Label() { Text = f1 });
-                    step3Stack.Children.Add(new Label() { Text = f2 });
-                    step3Stack.Children.Add(new Label()
-                    {
-                        Text = uslovie,
-                        HorizontalOptions = LayoutOptions.End,
-                        Margin = new Thickness(150, -5, 0, -5)
-                    });
-                    step3Stack.Children.Add(new Label() { Text = f3 });
-                    if (uslovie.Contains("не сходится")) return;
+                    StackLayout fstack = new StackLayout();
+                    fstack.Orientation = StackOrientation.Horizontal;
+                    fstack.Children.Add(new Label() { Text = f1.Remove(f1.Length - 3) });
+                    fstack.Children.Add(new Label() { Text = f1.Substring(f1.Length - 3), TextColor = Color.Red, VerticalTextAlignment = TextAlignment.End, MinimumWidthRequest = 30 });
+                    step3Stack.Children.Add(fstack);
+                    fstack = new StackLayout();
+                    fstack.Orientation = StackOrientation.Horizontal;
+                    fstack.Children.Add(new Label() { Text = f2.Remove(f2.Length - 3) });
+                    fstack.Children.Add(new Label() { Text = f2.Substring(f2.Length - 3), TextColor = Color.LawnGreen, VerticalTextAlignment = TextAlignment.End, MinimumWidthRequest = 30 });
+                    step3Stack.Children.Add(fstack);
+                    fstack = new StackLayout();
+                    fstack.Orientation = StackOrientation.Horizontal;
+                    fstack.Children.Add(new Label() { Text = f3.Remove(f3.Length - 3) });
+                    fstack.Children.Add(new Label() { Text = f3.Substring(f3.Length - 3), TextColor = Color.LawnGreen, VerticalTextAlignment = TextAlignment.End, MinimumWidthRequest = 30 });
+                    step3Stack.Children.Add(fstack);
                     a = c;
                 }
+
                 step3Stack.Children.Add(new Label() { Text = $"Следующая хорда: [{a} ; {b}]" });
-                step3Stack.Children.Add(new Label() { Text = $" " });
+                step3Stack.Children.Add(new Frame() { HeightRequest = 1, BackgroundColor = Color.DeepPink, CornerRadius = 3, Padding = new Thickness(0), Margin = new Thickness(0, 10) });
+                
+                oldс = c;
+                counterRoots++;
             }
 
             #endregion
         }
         private bool Step2(string equlation, decimal interval1, decimal interval2)
         {
-            decimal r1 = CalculateFormula(equlation, interval1);
-            decimal r2 = CalculateFormula(equlation, interval2);
             string f1 = FormulaToView(equlation, interval1);
             string f2 = FormulaToView(equlation, interval2);
             step2Stack.Children.Add(new Label() { Text = f1 });
-            step2Stack.Children.Add(new Label() { Text = $"}} f({r1}) × f({r2}) = {r1} × {r2} = {r1 * r2} {(r1 * r2 < 0 ? "<":">")} 0",
-            HorizontalOptions = LayoutOptions.End, Margin = new Thickness(0, -5)});
             step2Stack.Children.Add(new Label() { Text = f2 });
-            if (r1 * r2 < 0 && CheckConvergenceCondition(f1, f2))
+            if (CheckConvergenceCondition(f1, f2))
             {
-                step2Stack.Children.Add(new Label() { Text = "Условие на сходимость выполнено", FontSize = 18 });
+                step2Stack.Children.Add(new Label() { Text = "Условие сходимости выполнено", FontSize = 18 });
                 return true;
             }
-            step2Stack.Children.Add(new Label() { Text = "Условие на сходимость не выполнено", FontSize = 18 });
+            step2Stack.Children.Add(new Label() { Text = "Условие сходимости не выполнено", FontSize = 18 });
             return false;
+        }
+        private string GetSubscripts(int number)
+        {
+            string result = string.Empty;
+            while (number != 0)
+            {
+                result = result.Insert(0, _subscripts[number % 10]);
+                number /= 10;
+            }
+            return result;
         }
         private decimal CalculateFormula(string equlation, decimal value)
         {
+            if (_decimalMemory.TryGetValue(value, out decimal result))
+            {
+                return result;
+            }
             string strvalue = value.ToString();
             if (value < 0) strvalue = value.ToString().Replace("-", "~");
             string primer = equlation.Replace("x", strvalue);
             decimal result1 = decimal.Parse(Calculator.SolvePrimer(primer));
-            return Math.Round(result1, _decimalCount);
+            result1 = Math.Round(result1, _decimalCount);
+            _decimalMemory.Add(value, result1);
+            return result1;
         }
         private string FormulaToView(string equlation, decimal value)
         {
             string strvalue = value.ToString();
-            if (value < 0) strvalue = value.ToString().Replace("-", "~");
             string primer = equlation.Replace("x", strvalue);
-            decimal result1 = decimal.Parse(Calculator.SolvePrimer(primer));
-            primer = primer.Replace("*", "×").Replace("~", "-");
+            if (_decimalMemory.TryGetValue(value, out decimal result))
+            {
+                return $"f({value}) = {result} {(result < 0 ? "<" : ">")} 0";
+            }
+            decimal result1 = CalculateFormula(equlation, value);
+            primer = primer.Replace("*", " × ").Replace("~", "-");
+            primer = primer.Replace("+", " + ").Replace("^", " ^");
             result1 = Math.Round(result1, _decimalCount);
-            return $"f({value}) = {primer} = {result1} {(result1 < 0 ? "<" : ">")} 0";
+            primer += " = " + result1;
+            return $"f({value}) = {primer} {(result1 < 0 ? "<" : ">")} 0";
         }
         private string DeltaToView(decimal c1, decimal c2, decimal epsilon)
         {
