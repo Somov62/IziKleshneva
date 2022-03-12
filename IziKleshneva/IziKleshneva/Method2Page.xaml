@@ -1,18 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="IziKleshneva.Method1"
-             Title="Метод половинного деления"
+             x:Class="IziKleshneva.Method2Page"
              Shell.NavBarIsVisible="False">
     <ScrollView  x:Name="scroll" BackgroundColor="#333333">
-
         <StackLayout Spacing="0">
             <Frame BackgroundColor="#FF222222" Padding="24, 12, 24, 24" CornerRadius="0">
                 <Frame Padding="0" BackgroundColor="Transparent">
                     <StackLayout>
-                        <Label Text="Метод половинного деления" TextColor="DeepPink" HorizontalOptions="Center" FontSize="20"/>
+                        <Label Text="Метод хорд" TextColor="DeepPink" HorizontalOptions="Center" FontSize="20"/>
                         <Frame BackgroundColor="White" Padding="0" CornerRadius="5">
-                            
                             <Grid Padding="0" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
@@ -72,13 +69,12 @@
                     </Style>
                 </StackLayout.Resources>
                 <StackLayout x:Name="step1Stack" Padding="24, 12, 24, 0" >
-                    <Label Text="Первый шаг - переменные" TextColor="DeepPink" FontSize="20" FontAttributes="Bold" />
-                </StackLayout>
-                <StackLayout x:Name="step2Stack" Padding="24, 12, 24, 0">
+                    <Label Text="Первый шаг - переменные"         TextColor="DeepPink" FontSize="20" FontAttributes="Bold" />
                     <Label Text="Второй шаг - условие сходимости" TextColor="DeepPink" FontSize="20" FontAttributes="Bold" />
-                </StackLayout>
-                <StackLayout x:Name="step3Stack" Padding="24, 12, 24, 24">
                     <Label Text="Третий шаг - действие по методу" TextColor="DeepPink" FontSize="20" FontAttributes="Bold" />
+                </StackLayout>
+                <StackLayout>
+                    <Label Text=""/>
                 </StackLayout>
             </StackLayout>
         </StackLayout>

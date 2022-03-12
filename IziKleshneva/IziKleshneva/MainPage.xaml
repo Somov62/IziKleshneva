@@ -32,10 +32,10 @@
         </StackLayout>
     </Shell.FlyoutHeader>
     <FlyoutItem Title="Метод половинного деления" >
-        <ShellContent Title="Метод половинного деления" ContentTemplate="{DataTemplate pages:Method1}"/>
+        <ShellContent Title="Метод половинного деления" ContentTemplate="{DataTemplate pages:Method1Page}"/>
     </FlyoutItem>
     <FlyoutItem Title="Метод хорд">
-        <ShellContent ContentTemplate="{DataTemplate pages:Method2}"/>
+        <ShellContent ContentTemplate="{DataTemplate pages:Method2Page}"/>
     </FlyoutItem>
     <Shell.ItemTemplate>
         <DataTemplate>
