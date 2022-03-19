@@ -10,7 +10,7 @@
             <Frame BackgroundColor="#FF222222" Padding="24, 12, 24, 24" CornerRadius="0">
                 <Frame Padding="0" BackgroundColor="Transparent">
                     <StackLayout>
-                        <Label Text="Метод половинного деления" TextColor="DeepPink" HorizontalOptions="Center" FontSize="20"/>
+                        <Button Text="Метод половинного деления" Grid.Column="1" BackgroundColor="#FFFF1493" Clicked="OpenFlyout_Click" CornerRadius="5" TextColor="White" FontSize="18" TextTransform="None" HeightRequest="30" Margin="0" Padding="-50" HorizontalOptions="FillAndExpand"/>
                         <Frame BackgroundColor="White" Padding="0" CornerRadius="5">
 
                             <Grid Padding="0" >
@@ -19,9 +19,9 @@
                                     <ColumnDefinition Width="0.15*"/>
                                     <ColumnDefinition Width="0.25*"/>
                                 </Grid.ColumnDefinitions>
-                                <Entry x:Name="txtEquation" BackgroundColor="White" Grid.Column="0" Keyboard="Plain"  TextChanged="txtEquation_TextChanged" PlaceholderColor="#FFFFFF" Margin="0,0,-10,0"/>
+                                <Entry x:Name="txtEquation" BackgroundColor="White" TextColor="Black" Grid.Column="0" Keyboard="Plain"  TextChanged="txtEquation_TextChanged" PlaceholderColor="#FFFFFF" Margin="0,0,-10,0"/>
                                 <Label Text="= 0" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black" Grid.Column="1" FontSize="18" Margin="0, 1, 0, 0"/>
-                                <Button  Clicked="Solve_Click" Text="=>" CornerRadius="0" TextColor="White" BackgroundColor="MediumVioletRed" Grid.Column="2"/>
+                                <Button  Clicked="Solve_Click" Text="=>" CornerRadius="0" TextColor="White" BackgroundColor="DeepPink" Grid.Column="2"/>
                             </Grid>
                         </Frame>
                     </StackLayout>
@@ -44,7 +44,7 @@
                         <StackLayout Orientation="Horizontal" Grid.Column="1">
                             <Label Text="Точность:" TextColor="White" FontSize="20" Margin="20, 0, 10, 0" VerticalTextAlignment="Center" />
                             <Frame CornerRadius="5" Padding="0" Margin="5,5, 5, 0" HorizontalOptions="FillAndExpand"  >
-                                <Entry x:Name="txtEpsilon"  HeightRequest="40" VerticalOptions="End" Keyboard="Numeric" TextChanged="txtEpsilon_TextChanged" HorizontalTextAlignment="Center"/>
+                                <Entry x:Name="txtEpsilon"  HeightRequest="40" TextColor="Black" VerticalOptions="End" Keyboard="Numeric" TextChanged="txtEpsilon_TextChanged" HorizontalTextAlignment="Center"/>
                             </Frame>
                         </StackLayout>
                     </Grid>
@@ -57,7 +57,7 @@
                         <StackLayout Orientation="Horizontal">
                             <Label Text="Знаков после запятой:" TextColor="White" FontSize="20" Margin="20, 0, 10, 0" VerticalTextAlignment="Center" />
                             <Frame CornerRadius="5" Padding="0" Margin="5,5, 5, 0" HorizontalOptions="FillAndExpand"  >
-                                <Entry x:Name="txtZnaki" Text="4"  HeightRequest="40" VerticalOptions="End" Keyboard="Numeric" HorizontalTextAlignment="Center"/>
+                                <Entry x:Name="txtZnaki" Text="4"  HeightRequest="40" TextColor="Black" VerticalOptions="End" Keyboard="Numeric" HorizontalTextAlignment="Center"/>
                             </Frame>
                         </StackLayout>
                     </Grid>

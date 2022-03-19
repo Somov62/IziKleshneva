@@ -57,10 +57,17 @@ namespace IziKleshneva
         private void txtEpsilon_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (txtEpsilon.Text.Length < 3) return;
+            txtEpsilon.Text = txtEpsilon.Text.Replace(".", ",");
             if (txtEpsilon.Text.IndexOf(",") == -1) return;
             int count = txtEpsilon.Text.Substring(txtEpsilon.Text.IndexOf(",") + 1).Length;
+            txtZnaki.Text = count.ToString();
             if (count < 4 || count > 15)
                 txtZnaki.Text = 4.ToString();
+        }
+
+        private void OpenFlyout_Click(object sender, EventArgs e)
+        {
+            Shell.Current.FlyoutIsPresented = true;
         }
     }
 
