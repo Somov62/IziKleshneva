@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="IziKleshneva.Method3Page"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.NavBarIsVisible="False">
+    <ScrollView x:Name="scroll" BackgroundColor="#333333">
+        <StackLayout Spacing="0">
+            <Frame
+                Padding="24,12,24,24"
+                BackgroundColor="#FF222222"
+                CornerRadius="0">
+                <StackLayout>
+                    <Button
+                        Grid.Column="1"
+                        Margin="0,0,0,20"
+                        Padding="-50"
+                        BackgroundColor="DeepPink"
+                        Clicked="OpenFlyout_Click"
+                        CornerRadius="5"
+                        FontSize="18"
+                        HeightRequest="30"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Метод Якоби"
+                        TextColor="White"
+                        TextTransform="None" />
+                    <StackLayout
+                        HorizontalOptions="FillAndExpand"
+                        Orientation="Horizontal">
+                        <Label
+                            Margin="5,0,10,0"
+                            FontSize="20"
+                            HorizontalOptions="Start"
+                            Text="Количество уравнений:"
+                            TextColor="White"
+                            VerticalTextAlignment="Center" />
+                        <Frame
+                            Margin="5,5,5,0"
+                            Padding="0"
+                            CornerRadius="5"
+                            HorizontalOptions="FillAndExpand">
+                            <Entry
+                                x:Name="txtCountEqulation"
+                                HeightRequest="40"
+                                HorizontalTextAlignment="Center"
+                                Keyboard="Numeric"
+                                TextColor="Black"
+                                VerticalOptions="End" />
+                        </Frame>
+                    </StackLayout>
+                    <StackLayout
+                        Margin="5, 0"
+                        HorizontalOptions="FillAndExpand"
+                        Orientation="Horizontal">
+                        <Label
+                            Margin="0,0,5,5"
+                            FontSize="20"
+                            Text="Количество корней:       "
+                            TextColor="White"
+                            VerticalTextAlignment="Center" />
+                        <Frame
+                            Padding="0"
+                            CornerRadius="5"
+                            HorizontalOptions="FillAndExpand">
+                            <Entry
+                                x:Name="txtCountX"
+                                HeightRequest="40"
+                                HorizontalTextAlignment="Center"
+                                Keyboard="Numeric"
+                                TextColor="Black"
+                                VerticalOptions="End" />
+                        </Frame>
+                    </StackLayout>
+                    <StackLayout
+                        Margin="5,0,5,00"
+                        HorizontalOptions="FillAndExpand"
+                        Orientation="Horizontal">
+                        <Label
+                            Margin="0,0,5,5"
+                            FontSize="20"
+                            Text="Количество итераций:"
+                            TextColor="White"
+                            VerticalTextAlignment="Center" />
+                        <Frame
+                            Padding="0"
+                            CornerRadius="5"
+                            HorizontalOptions="FillAndExpand">
+                            <Entry
+                                x:Name="txtCountIteration"
+                                HeightRequest="40"
+                                HorizontalTextAlignment="Center"
+                                Keyboard="Numeric"
+                                TextColor="Black"
+                                VerticalOptions="End" />
+                        </Frame>
+                    </StackLayout>
+                    <StackLayout
+                        Margin="5,0,5,20"
+                        HorizontalOptions="FillAndExpand"
+                        Orientation="Horizontal">
+                        <Label
+                            Margin="0,0,5,5"
+                            FontSize="20"
+                            Text="Определить точность:"
+                            TextColor="White"
+                            VerticalTextAlignment="Center" />
+                        <Frame
+                            Padding="0"
+                            CornerRadius="5"
+                            BackgroundColor="White"
+                            HorizontalOptions="EndAndExpand">
+                            <Switch IsToggled="True" x:Name="toggle" ThumbColor="DeepPink" OnColor="LawnGreen"/>
+                        </Frame>
+                    </StackLayout>
+                    <Button
+                        Grid.Column="1"
+                        Margin="0,0,0,20"
+                        Padding="-50"
+                        BackgroundColor="DeepPink"
+                        Clicked="CreateMatrix_Click"
+                        CornerRadius="5"
+                        FontSize="18"
+                        HeightRequest="40"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Заполнить матрицу"
+                        TextColor="White"
+                        TextTransform="None">
+                    </Button>
+                    <Label x:Name="tip1" IsVisible="false" Text="Заполните матрицу коэффициентами." TextColor="White" FontSize="15" FontAttributes="Bold" Margin="0, -15, 0 ,0" HorizontalTextAlignment="Center"/>
+                    <Label x:Name="tip2" IsVisible="false" Text="Правую матрицу заполните значениями, стоящими в уравнении после знака =" TextColor="White" FontSize="15" FontAttributes="Bold" Margin="0, 0, 0 ,0" HorizontalTextAlignment="Center"/>
+                    <StackLayout Orientation="Horizontal"  HorizontalOptions="FillAndExpand" >
+                        <StackLayout.Resources>
+                            <Style TargetType="Label">
+                                <Setter Property="FontSize" Value="35" />
+                                <Setter Property="TextColor" Value="White" />
+                                <Setter Property="VerticalTextAlignment" Value="Center" />
+                            </Style>
+                            <Style TargetType="Entry">
+                                <Setter Property="BackgroundColor" Value="White" />
+                                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                                <Setter Property="Keyboard" Value="Numeric" />
+                            </Style>
+                        </StackLayout.Resources>
+                        <StackLayout x:Name="matrixContainer" HorizontalOptions="FillAndExpand">
+                            
+                        </StackLayout>
+                        <StackLayout x:Name="matrixResultContainer">
+                            
+                        </StackLayout>
+                    </StackLayout>
+                    <Button
+                        x:Name="btnSolve"
+                        Grid.Column="1"
+                        Margin="0,10,0,0"
+                        Padding="-50"
+                        BackgroundColor="DeepPink"
+                        Clicked="SolveClick"
+                        CornerRadius="5"
+                        FontSize="18"
+                        HeightRequest="40"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Рассчитать"
+                        TextColor="White"
+                        TextTransform="None"
+                        IsVisible="false">
+                    </Button>
+
+                </StackLayout>
+            </Frame>
+            <StackLayout>
+                <StackLayout.Resources>
+                    <Style TargetType="Label">
+                        <Setter Property="TextColor" Value="White" />
+                        <Setter Property="FontSize" Value="16" />
+                    </Style>
+                </StackLayout.Resources>
+                <StackLayout x:Name="stackParent" Padding="24,12,24,0">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        Text="Первый шаг - переменные"
+                        TextColor="DeepPink" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        Text="Второй шаг - условие сходимости"
+                        TextColor="DeepPink" />
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        Text="Третий шаг - действие по методу"
+                        TextColor="DeepPink" />
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="" />
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
