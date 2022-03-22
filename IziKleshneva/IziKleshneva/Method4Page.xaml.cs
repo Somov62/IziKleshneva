@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace IziKleshneva
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Method3Page : ContentPage
+    public partial class Method4Page : ContentPage
     {
-        public Method3Page()
+        public Method4Page()
         {
             InitializeComponent();
         }
@@ -29,14 +29,14 @@ namespace IziKleshneva
         protected string GetSub(int number, bool isUp = false)
         {
             string result = string.Empty;
-            while (number != 0)
+            do
             {
                 if (isUp)
                     result = result.Insert(0, _subscriptsUpper[number % 10]);
                 else
                     result = result.Insert(0, _subscriptsLower[number % 10]);
                 number /= 10;
-            }
+            } while (number != 0);
             return result;
         }
         private void OpenFlyout_Click(object sender, EventArgs e)
@@ -61,7 +61,7 @@ namespace IziKleshneva
                 row.Children.Add(new Label() { Text = "(" });
                 for (int j = 0; j < countX; j++)
                 {
-                    row.Children.Add(new Entry() { TextColor = Color.Black }) ;
+                    row.Children.Add(new Entry() { TextColor = Color.Black });
                 }
                 row.Children.Add(new Label() { Text = ")" });
                 matrixContainer.Children.Add(row);
@@ -170,7 +170,7 @@ namespace IziKleshneva
         {
             StackLayout stack = new StackLayout();
             stack.Children.Add(new Label() { Text = numerator, HorizontalOptions = LayoutOptions.Center });
-            stack.Children.Add(new Frame() { HeightRequest = 1, Padding = new Thickness(0), Margin = new Thickness(0, -3, 0, -4),  HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.White, VerticalOptions = LayoutOptions.Start });
+            stack.Children.Add(new Frame() { HeightRequest = 1, Padding = new Thickness(0), Margin = new Thickness(0, -3, 0, -4), HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.White, VerticalOptions = LayoutOptions.Start });
             stack.Children.Add(new Label() { Text = denominator, HorizontalOptions = LayoutOptions.Center });
             return stack;
         }
@@ -183,11 +183,11 @@ namespace IziKleshneva
             decimal max = decimal.MinValue;
             for (int i = 0; i < oldcorny.Length; i++)
             {
-                string line =  $"Δ{GetSub(i + 1)} = |x{GetSub(i+1)}{GetSub(actualIteration + 1, true)}- x{GetSub(i + 1)}{GetSub(actualIteration, true)}| = |";
+                string line = $"Δ{GetSub(i + 1)} = |x{GetSub(i + 1)}{GetSub(actualIteration + 1, true)}- x{GetSub(i + 1)}{GetSub(actualIteration, true)}| = |";
                 line += Math.Round(newcorny[i], 4).ToString();
                 if (oldcorny[i] < 0) line += " + ";
                 else line += " - ";
-                line +=Math.Round(Math.Abs(oldcorny[i]), 4).ToString() + "| = ";
+                line += Math.Round(Math.Abs(oldcorny[i]), 4).ToString() + "| = ";
                 accur[i] = Math.Abs(newcorny[i] - oldcorny[i]);
                 if (accur[i] > max) max = accur[i];
                 line += Math.Round(accur[i], 4);
@@ -210,7 +210,7 @@ namespace IziKleshneva
             decimal[] diagonal = new decimal[matrix.GetLength(0)];
             for (int i = 0; i < diagonal.Length; i++)
             {
-                for (int j = 0; j < matrix.GetLength(1) ; j++)
+                for (int j = 0; j < matrix.GetLength(1); j++)
                 {
                     if (i == j)
                     {
@@ -219,23 +219,24 @@ namespace IziKleshneva
                     }
                 }
             }
-
+            decimal[] newCorny = new decimal[corny.Length];
             while (iterationCount > iteration)
             {
                 stackParent.Children.Add(new Label() { Text = $"Итерация {iteration + 1}  i = " + iteration, TextColor = Color.DeepPink, FontSize = 17 });
-                decimal[] newCorny = new decimal[corny.Length];
                 for (int i = 0; i < corny.Length; i++)
                 {
                     StackLayout stack = new StackLayout() { Orientation = StackOrientation.Horizontal };
                     stack.Children.Add(new Label() { Text = $"x{GetSub(i + 1)}{GetSub(iteration + 1, true)}=", VerticalOptions = LayoutOptions.Center });
 
-                    string numerator = ""; 
+                    string numerator = "";
                     decimal coren = 0;
                     for (int j = 0; j < matrix.GetLength(1) - 1; j++)
                     {
                         if (i == j) continue;
-                        coren += matrix[i, j] * -1 * corny[j];
-                        string element = Math.Round(matrix[i, j] * -1, 4).ToString() + $"x{GetSub(j + 1)}{GetSub(iteration, true)}";
+                        coren += matrix[i, j] * -1 * newCorny[j];
+                        if (matrix[i, j] == 0) continue;
+                        int upindex = iteration + (j > i ? 0 : 1);
+                        string element = Math.Round(matrix[i, j] * -1, 4).ToString() + $"x{GetSub(j + 1)}{GetSub(upindex, true)}";
                         if (element[0] != '-') element = element.Insert(0, "+");
                         numerator += element;
                     }
@@ -252,12 +253,12 @@ namespace IziKleshneva
                 {
                     accuracy = FindAccuracy(corny, newCorny, iteration);
                 }
-                corny = newCorny;
+                Array.Copy(newCorny, corny, newCorny.Length);
                 for (int i = 0; i < corny.Length; i++)
                 {
                     stackParent.Children.Add(new Label() { Text = $"x{GetSub(i + 1)}{GetSub(iteration + 1, true)}= " + Math.Round(corny[i], 4) });
                 }
-                
+
                 if (accuracy != null) stackParent.Children.Add(accuracy);
                 iteration++;
             }
@@ -278,7 +279,7 @@ namespace IziKleshneva
             stackParent.Children.Add(new Label() { Text = "Второй шаг - условие сходимости", TextColor = Color.DeepPink, FontSize = 20, FontAttributes = FontAttributes.Bold });
             if (CheckCondition(matrix))
             {
-                stackParent.Children.Add(new Label() { Text = "Условие сходимости выполнено", FontSize = 18, TextColor = Color.LawnGreen});
+                stackParent.Children.Add(new Label() { Text = "Условие сходимости выполнено", FontSize = 18, TextColor = Color.LawnGreen });
             }
             else
             {
@@ -289,11 +290,11 @@ namespace IziKleshneva
             var corny = Step3(matrix, 3, toggle.IsToggled);
 
             StackLayout stack = new StackLayout() { Orientation = StackOrientation.Horizontal };
-            stack.Children.Add(new Label() { Text = "Ответ:   x = ", VerticalOptions= LayoutOptions.Center});
+            stack.Children.Add(new Label() { Text = "Ответ:   x = ", VerticalOptions = LayoutOptions.Center });
             StackLayout matrStack = new StackLayout();
             for (int i = 0; i < corny.Length; i++)
             {
-                matrStack.Children.Add(new Label() { Text = "( "});
+                matrStack.Children.Add(new Label() { Text = "( " });
             }
             stack.Children.Add(matrStack);
             matrStack = new StackLayout();
@@ -313,3 +314,4 @@ namespace IziKleshneva
         }
     }
 }
+

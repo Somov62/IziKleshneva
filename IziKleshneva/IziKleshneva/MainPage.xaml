@@ -41,6 +41,9 @@
     <FlyoutItem Title="СЛАУ Метод Якоби">
         <ShellContent ContentTemplate="{DataTemplate pages:Method3Page}"/>
     </FlyoutItem>
+    <FlyoutItem Title="СЛАУ Метод Зейделя">
+        <ShellContent ContentTemplate="{DataTemplate pages:Method4Page}"/>
+    </FlyoutItem>
     <Shell.ItemTemplate>
         <DataTemplate>
             <Grid x:Name="FlyoutItemLayout"
