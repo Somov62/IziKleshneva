@@ -21,7 +21,7 @@
                         FontSize="18"
                         HeightRequest="30"
                         HorizontalOptions="FillAndExpand"
-                        Text="Метод Якоби"
+                        Text="Метод Зейделя"
                         TextColor="White"
                         TextTransform="None" />
                     <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">

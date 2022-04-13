@@ -44,6 +44,12 @@
     <FlyoutItem Title="СЛАУ Метод Зейделя">
         <ShellContent ContentTemplate="{DataTemplate pages:Method4Page}"/>
     </FlyoutItem>
+    <FlyoutItem Title="Метод Эйлера">
+        <ShellContent ContentTemplate="{DataTemplate pages:Method5Page}"/>
+    </FlyoutItem> 
+    <FlyoutItem Title="Метод Эйлера-Коши">
+        <ShellContent ContentTemplate="{DataTemplate pages:Method6Page}"/>
+    </FlyoutItem>
     <Shell.ItemTemplate>
         <DataTemplate>
             <Grid x:Name="FlyoutItemLayout"

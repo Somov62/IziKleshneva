@@ -11,5 +11,8 @@
         <Style TargetType="Label" >
             <Setter Property="FontFamily" Value="OpenSans1" />
         </Style>
+        <Style TargetType="Entry">
+            <Setter Property="FontFamily" Value="OpenSans1" />
+        </Style>
     </Application.Resources>
 </Application>

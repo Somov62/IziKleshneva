@@ -287,7 +287,7 @@ namespace IziKleshneva
                 return;
             }
             stackParent.Children.Add(new Label() { Text = "Третий шаг - действие по методу", TextColor = Color.DeepPink, FontSize = 20, FontAttributes = FontAttributes.Bold });
-            var corny = Step3(matrix, 3, toggle.IsToggled);
+            var corny = Step3(matrix, int.Parse(txtCountIteration.Text), toggle.IsToggled);
 
             StackLayout stack = new StackLayout() { Orientation = StackOrientation.Horizontal };
             stack.Children.Add(new Label() { Text = "Ответ:   x = ", VerticalOptions = LayoutOptions.Center });
