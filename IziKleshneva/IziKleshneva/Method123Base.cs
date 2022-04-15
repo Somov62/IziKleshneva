@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace IziKleshneva
 {
-    public abstract class MethodBase
+    public abstract class Method123Base
     {
         protected int _decimalCount = 4;
         protected Dictionary<decimal, decimal> _decimalMemory;

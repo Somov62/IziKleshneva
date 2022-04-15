@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="IziKleshneva.Method5Page"
+             x:Class="IziKleshneva.Method7Page"
             Shell.NavBarIsVisible="False">
+    
     <ScrollView x:Name="scroll" BackgroundColor="#333333">
         <StackLayout Spacing="0">
             <Frame
@@ -20,7 +21,7 @@
                         FontSize="18"
                         HeightRequest="30"
                         HorizontalOptions="FillAndExpand"
-                        Text="Метод Эйлера"
+                        Text="Метод Рунге-Кутта"
                         TextColor="White"
                         TextTransform="None" />
                     <Frame
@@ -51,6 +52,8 @@
                                     PlaceholderColor="#FFFFFF"
                                     TextChanged="txtEquation_TextChanged"
                                     TextColor="Black" />
+
+
                             <Button
                                     Grid.Column="2"
                                     BackgroundColor="DeepPink"
@@ -209,7 +212,10 @@
                             <Setter Property="FontSize" Value="16" />
                         </Style>
                     </StackLayout.Resources>
-                    <Grid x:Name="stackParentGrid">
+                    <StackLayout x:Name="stackFormula" VerticalOptions="Start">
+                        
+                    </StackLayout>
+                    <Grid x:Name="stackParentGrid" VerticalOptions="FillAndExpand" Margin="-5, 0, 0, 0">
                         <Grid.Resources>
                             <Style TargetType="Label">
                                 <Setter Property="TextColor" Value="White" />
@@ -223,6 +229,10 @@
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <Label
                                  FontAttributes="Bold"
@@ -231,10 +241,10 @@
                                  Margin="-10, 5, 0, 5"
                                  Text="Эту область можно двигать по горизонтали. Заполните поля согласно подсказкам"
                                  TextColor="DeepPink" />
-
                     </Grid>
+
                     <StackLayout>
-                        <Label Text="" />
+                        <Label Text="{Binding Path=Children.Count}" />
                     </StackLayout>
                 </StackLayout>
             </ScrollView>

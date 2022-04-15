@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace IziKleshneva
 {
-    class Method2 : MethodBase
+    class Method2 : Method123Base
     {
        protected override void Step3(string equlation, decimal interval1, decimal interval2, decimal epsilon)
         {

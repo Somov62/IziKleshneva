@@ -1,107 +1,109 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Shell xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:pages="clr-namespace:IziKleshneva"
-             x:Class="IziKleshneva.MainPage"
-       FlyoutBackgroundColor="#333333">
+<Shell
+    x:Class="IziKleshneva.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:IziKleshneva"
+    FlyoutBackgroundColor="#333333">
     <Shell.Resources>
-        <Style TargetType="Label"
-       Class="FlyoutItemLabelStyle">
-            <Setter Property="TextColor"
-            Value="DeepPink" />
-            <Setter Property="HeightRequest"
-            Value="100" />
+        <Style Class="FlyoutItemLabelStyle" TargetType="Label">
+            <Setter Property="TextColor" Value="DeepPink" />
+            <Setter Property="HeightRequest" Value="100" />
             <Setter Property="FontSize" Value="17" />
         </Style>
 
-        <Style TargetType="Image"
-       Class="FlyoutItemImageStyle">
+        <Style Class="FlyoutItemImageStyle" TargetType="Image">
             <Setter Property="Aspect" Value="AspectFit" />
         </Style>
 
-        <Style TargetType="Layout"
-       Class="FlyoutItemLayoutStyle"
-       ApplyToDerivedTypes="True">
-            <Setter Property="BackgroundColor"
-            Value="#555555" />
+        <Style
+            ApplyToDerivedTypes="True"
+            Class="FlyoutItemLayoutStyle"
+            TargetType="Layout">
+            <Setter Property="BackgroundColor" Value="#555555" />
         </Style>
     </Shell.Resources>
     <Shell.FlyoutHeader>
-        <StackLayout BackgroundColor="#FF333333" Padding="10, 30">
-            <Label Text="Меню" TextColor="DeepPink" HorizontalOptions="Center" FontSize="30"/>
+        <StackLayout Padding="10,30" BackgroundColor="#FF333333">
+            <Label
+                FontSize="30"
+                HorizontalOptions="Center"
+                Text="Меню"
+                TextColor="DeepPink" />
         </StackLayout>
     </Shell.FlyoutHeader>
-    <FlyoutItem Title="Метод половинного деления" >
-        <ShellContent Title="Метод половинного деления" ContentTemplate="{DataTemplate pages:Method1Page}"/>
+    <FlyoutItem Title="Метод половинного деления">
+        <ShellContent Title="Метод половинного деления" ContentTemplate="{DataTemplate pages:Method1Page}" />
     </FlyoutItem>
     <FlyoutItem Title="Метод хорд">
-        <ShellContent ContentTemplate="{DataTemplate pages:Method2Page}"/>
+        <ShellContent ContentTemplate="{DataTemplate pages:Method2Page}" />
     </FlyoutItem>
-    
+
     <FlyoutItem Title="СЛАУ Метод Якоби">
-        <ShellContent ContentTemplate="{DataTemplate pages:Method3Page}"/>
+        <ShellContent ContentTemplate="{DataTemplate pages:Method3Page}" />
     </FlyoutItem>
     <FlyoutItem Title="СЛАУ Метод Зейделя">
-        <ShellContent ContentTemplate="{DataTemplate pages:Method4Page}"/>
+        <ShellContent ContentTemplate="{DataTemplate pages:Method4Page}" />
     </FlyoutItem>
     <FlyoutItem Title="Метод Эйлера">
-        <ShellContent ContentTemplate="{DataTemplate pages:Method5Page}"/>
-    </FlyoutItem> 
+        <ShellContent ContentTemplate="{DataTemplate pages:Method5Page}" />
+    </FlyoutItem>
     <FlyoutItem Title="Метод Эйлера-Коши">
-        <ShellContent ContentTemplate="{DataTemplate pages:Method6Page}"/>
+        <ShellContent ContentTemplate="{DataTemplate pages:Method6Page}" />
+    </FlyoutItem>
+    <FlyoutItem Title="Метод Ругне-Кутта">
+        <ShellContent ContentTemplate="{DataTemplate pages:Method7Page}" />
     </FlyoutItem>
     <Shell.ItemTemplate>
         <DataTemplate>
-            <Grid x:Name="FlyoutItemLayout"
-          HeightRequest="{x:OnPlatform Android=50}"
-          ColumnSpacing="{x:OnPlatform UWP=0}"
-          RowSpacing="{x:OnPlatform UWP=0}">
-                <VisualStateManager.VisualStateGroups>
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal" />
-                            <VisualState x:Name="Selected">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundColor"
-                                    Value="{x:OnPlatform Android=#FF1493, iOS=#F2F2F2}" />
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </VisualStateManager.VisualStateGroups>
-
-                <Label x:Name="FlyoutItemLabel"
-               Text="{Binding Title}"
-               FontSize="{x:OnPlatform Android=14, iOS=Small}"
-               HorizontalOptions="{x:OnPlatform UWP=Start}"
-               HorizontalTextAlignment="{x:OnPlatform UWP=Start}"
-               FontAttributes="{x:OnPlatform iOS=Bold}"
-               VerticalTextAlignment="Center">
+            <Grid
+                x:Name="FlyoutItemLayout"
+                ColumnSpacing="{x:OnPlatform UWP=0}"
+                HeightRequest="{x:OnPlatform Android=50}"
+                RowSpacing="{x:OnPlatform UWP=0}">
+                <Label
+                    x:Name="FlyoutItemLabel"
+                    FontAttributes="{x:OnPlatform iOS=Bold}"
+                    FontSize="{x:OnPlatform Android=14,
+                                            iOS=Small}"
+                    HorizontalOptions="{x:OnPlatform UWP=Start}"
+                    HorizontalTextAlignment="{x:OnPlatform UWP=Start}"
+                    Text="{Binding Title}"
+                    VerticalTextAlignment="Center">
                     <Label.TextColor>
                         <OnPlatform x:TypeArguments="Color">
                             <OnPlatform.Platforms>
-                                <On Platform="Android"
-                            Value="#FFFFFF" />
+                                <On Platform="Android" Value="#FFFFFF" />
                             </OnPlatform.Platforms>
                         </OnPlatform>
                     </Label.TextColor>
                     <Label.Margin>
                         <OnPlatform x:TypeArguments="Thickness">
                             <OnPlatform.Platforms>
-                                <On Platform="Android"
-                            Value="20, 0, 0, 0" />
+                                <On Platform="Android" Value="20, 0, 0, 0" />
                             </OnPlatform.Platforms>
                         </OnPlatform>
                     </Label.Margin>
                     <Label.FontFamily>
                         <OnPlatform x:TypeArguments="x:String">
                             <OnPlatform.Platforms>
-                                <On Platform="Android"
-                            Value="sans-serif-medium" />
+                                <On Platform="Android" Value="sans-serif-medium" />
                             </OnPlatform.Platforms>
                         </OnPlatform>
                     </Label.FontFamily>
                 </Label>
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{x:OnPlatform Android=#FF1493, iOS=#F2F2F2}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
             </Grid>
         </DataTemplate>
     </Shell.ItemTemplate>
