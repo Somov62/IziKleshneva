@@ -4,199 +4,205 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Shell.NavBarIsVisible="False">
-    <ScrollView x:Name="scroll" BackgroundColor="#333333">
-        <StackLayout Spacing="0">
-            <Frame
-                Padding="24,12,24,24"
-                BackgroundColor="#FF222222"
-                CornerRadius="0">
-                <Frame Padding="0" BackgroundColor="Transparent">
-                    <StackLayout>
-                        <Button
-                            Grid.Column="1"
-                            Margin="0"
-                            Padding="-50"
-                            BackgroundColor="DeepPink"
-                            Clicked="OpenFlyout_Click"
-                            CornerRadius="5"
-                            FontSize="18"
-                            HeightRequest="30"
-                            HorizontalOptions="FillAndExpand"
-                            Text="Метод хорд"
-                            TextColor="White"
-                            TextTransform="None" />
-                        <Frame
-                            Padding="0"
-                            BackgroundColor="White"
-                            CornerRadius="5">
-                            <Grid Padding="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="0.15*" />
-                                    <ColumnDefinition Width="0.25*" />
-                                </Grid.ColumnDefinitions>
-                                <Entry
-                                    x:Name="txtEquation"
-                                    Grid.Column="0"
-                                    Margin="0,0,-10,0"
-                                    BackgroundColor="White"
-                                    Keyboard="Plain"
-                                    PlaceholderColor="#FFFFFF"
-                                    TextChanged="txtEquation_TextChanged"
-                                    TextColor="Black" />
+    <Grid>
+
+        <ScrollView x:Name="scroll" BackgroundColor="#333333">
+            <StackLayout Spacing="0">
+                <Frame
+                    Padding="24,12,24,24"
+                    BackgroundColor="#FF222222"
+                    CornerRadius="0">
+                    <Frame Padding="0" BackgroundColor="Transparent">
+                        <StackLayout>
+                            <Button
+                                Grid.Column="1"
+                                Margin="0"
+                                Padding="-50"
+                                BackgroundColor="DeepPink"
+                                Clicked="OpenFlyout_Click"
+                                CornerRadius="5"
+                                FontSize="18"
+                                HeightRequest="30"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Метод хорд"
+                                TextColor="White"
+                                TextTransform="None" />
+                            <Frame
+                                Padding="0"
+                                BackgroundColor="White"
+                                CornerRadius="5">
+                                <Grid Padding="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="0.15*" />
+                                        <ColumnDefinition Width="0.25*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Entry
+                                        x:Name="txtEquation"
+                                        Grid.Column="0"
+                                        Margin="0,0,-10,0"
+                                        BackgroundColor="White"
+                                        Keyboard="Plain"
+                                        PlaceholderColor="#FFFFFF"
+                                        Text="2x^2+5x-10"
+                                        TextChanged="txtEquation_TextChanged"
+                                        TextColor="Black" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Margin="0,1,0,0"
+                                        FontSize="18"
+                                        HorizontalOptions="Center"
+                                        Text="= 0"
+                                        TextColor="Black"
+                                        VerticalOptions="Center" />
+                                    <Button
+                                        Grid.Column="2"
+                                        BackgroundColor="DeepPink"
+                                        Clicked="Solve_Click"
+                                        CornerRadius="0"
+                                        Text="=&gt;"
+                                        TextColor="White" />
+                                </Grid>
+                            </Frame>
+                        </StackLayout>
+                    </Frame>
+                </Frame>
+                <Frame
+                    Padding="24,0,24,10"
+                    BackgroundColor="#FF222222"
+                    CornerRadius="0">
+                    <Frame
+                        Padding="0"
+                        BackgroundColor="Transparent"
+                        CornerRadius="5">
+                        <Grid Padding="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="1.6*" />
+                            </Grid.ColumnDefinitions>
+                            <StackLayout Orientation="Horizontal">
                                 <Label
-                                    Grid.Column="1"
-                                    Margin="0,1,0,0"
-                                    FontSize="18"
-                                    HorizontalOptions="Center"
-                                    Text="= 0"
-                                    TextColor="Black"
-                                    VerticalOptions="Center" />
-                                <Button
-                                    Grid.Column="2"
-                                    BackgroundColor="DeepPink"
-                                    Clicked="Solve_Click"
-                                    CornerRadius="0"
-                                    Text="=&gt;"
+                                    FontSize="30"
+                                    Text="["
+                                    TextColor="White"
+                                    VerticalTextAlignment="Center" />
+                                <Entry
+                                    x:Name="txtInterval1"
+                                    HorizontalOptions="FillAndExpand"
+                                    HorizontalTextAlignment="Center"
+                                    Keyboard="Numeric"
+                                    MaxLength="4"
+                                    Text="1"
                                     TextColor="White" />
-                            </Grid>
-                        </Frame>
-                    </StackLayout>
-                </Frame>
-            </Frame>
-            <Frame
-                Padding="24,0,24,10"
-                BackgroundColor="#FF222222"
-                CornerRadius="0">
-                <Frame
-                    Padding="0"
-                    BackgroundColor="Transparent"
-                    CornerRadius="5">
-                    <Grid Padding="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="1.6*" />
-                        </Grid.ColumnDefinitions>
-                        <StackLayout Orientation="Horizontal">
-                            <Label
-                                FontSize="30"
-                                Text="["
-                                TextColor="White"
-                                VerticalTextAlignment="Center" />
-                            <Entry
-                                x:Name="txtInterval1"
-                                HorizontalOptions="FillAndExpand"
-                                HorizontalTextAlignment="Center"
-                                Keyboard="Numeric"
-                                MaxLength="4"
-                                TextColor="White" />
-                            <Label
-                                FontSize="30"
-                                Text=";"
-                                TextColor="White"
-                                VerticalTextAlignment="Center" />
-                            <Entry
-                                x:Name="txtInterval2"
-                                HorizontalOptions="FillAndExpand"
-                                HorizontalTextAlignment="Center"
-                                Keyboard="Numeric"
-                                MaxLength="4"
-                                TextColor="White" />
-                            <Label
-                                FontSize="30"
-                                Text="]"
-                                TextColor="White"
-                                VerticalTextAlignment="Center" />
-                        </StackLayout>
-                        <StackLayout Grid.Column="1" Orientation="Horizontal">
-                            <Label
-                                Margin="20,0,10,0"
-                                FontSize="20"
-                                Text="Точность:"
-                                TextColor="White"
-                                VerticalTextAlignment="Center" />
-                            <Frame
-                                Margin="5,5,5,0"
-                                Padding="0"
-                                CornerRadius="5"
-                                HorizontalOptions="FillAndExpand">
+                                <Label
+                                    FontSize="30"
+                                    Text=";"
+                                    TextColor="White"
+                                    VerticalTextAlignment="Center" />
                                 <Entry
-                                    x:Name="txtEpsilon"
-                                    HeightRequest="40"
+                                    x:Name="txtInterval2"
+                                    HorizontalOptions="FillAndExpand"
                                     HorizontalTextAlignment="Center"
                                     Keyboard="Numeric"
-                                    TextChanged="txtEpsilon_TextChanged"
-                                    TextColor="Black"
-                                    VerticalOptions="End" />
-                            </Frame>
+                                    MaxLength="4"
+                                    Text="2"
+                                    TextColor="White" />
+                                <Label
+                                    FontSize="30"
+                                    Text="]"
+                                    TextColor="White"
+                                    VerticalTextAlignment="Center" />
+                            </StackLayout>
+                            <StackLayout Grid.Column="1" Orientation="Horizontal">
+                                <Label
+                                    Margin="20,0,10,0"
+                                    FontSize="20"
+                                    Text="Точность:"
+                                    TextColor="White"
+                                    VerticalTextAlignment="Center" />
+                                <Frame
+                                    Margin="5,5,5,0"
+                                    Padding="0"
+                                    CornerRadius="5"
+                                    HorizontalOptions="FillAndExpand">
+                                    <Entry
+                                        x:Name="txtEpsilon"
+                                        HeightRequest="40"
+                                        HorizontalTextAlignment="Center"
+                                        Keyboard="Numeric"
+                                        TextChanged="txtEpsilon_TextChanged"
+                                        TextColor="Black"
+                                        VerticalOptions="End" />
+                                </Frame>
 
-                        </StackLayout>
-                    </Grid>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
                 </Frame>
-            </Frame>
-            <Frame
-                Padding="24,0,24,10"
-                BackgroundColor="#FF222222"
-                CornerRadius="0">
                 <Frame
-                    Padding="0"
-                    BackgroundColor="Transparent"
-                    CornerRadius="5">
-                    <Grid Padding="0">
+                    Padding="24,0,24,10"
+                    BackgroundColor="#FF222222"
+                    CornerRadius="0">
+                    <Frame
+                        Padding="0"
+                        BackgroundColor="Transparent"
+                        CornerRadius="5">
+                        <Grid Padding="0">
 
-                        <StackLayout Orientation="Horizontal">
-                            <Label
-                                Margin="20,0,10,0"
-                                FontSize="20"
-                                Text="Знаков после запятой:"
-                                TextColor="White"
-                                VerticalTextAlignment="Center" />
-                            <Frame
-                                Margin="5,5,5,0"
-                                Padding="0"
-                                CornerRadius="5"
-                                HorizontalOptions="FillAndExpand">
-                                <Entry
-                                    x:Name="txtZnaki"
-                                    HeightRequest="40"
-                                    HorizontalTextAlignment="Center"
-                                    Keyboard="Numeric"
-                                    Text="4"
-                                    TextColor="Black"
-                                    VerticalOptions="End" />
-                            </Frame>
-                        </StackLayout>
-                    </Grid>
+                            <StackLayout Orientation="Horizontal">
+                                <Label
+                                    Margin="20,0,10,0"
+                                    FontSize="20"
+                                    Text="Знаков после запятой:"
+                                    TextColor="White"
+                                    VerticalTextAlignment="Center" />
+                                <Frame
+                                    Margin="5,5,5,0"
+                                    Padding="0"
+                                    CornerRadius="5"
+                                    HorizontalOptions="FillAndExpand">
+                                    <Entry
+                                        x:Name="txtZnaki"
+                                        HeightRequest="40"
+                                        HorizontalTextAlignment="Center"
+                                        Keyboard="Numeric"
+                                        Text="4"
+                                        TextColor="Black"
+                                        VerticalOptions="End" />
+                                </Frame>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
                 </Frame>
-            </Frame>
-            <StackLayout>
-                <StackLayout.Resources>
-                    <Style TargetType="Label">
-                        <Setter Property="TextColor" Value="White" />
-                        <Setter Property="FontSize" Value="16" />
-                    </Style>
-                </StackLayout.Resources>
-                <StackLayout x:Name="step1Stack" Padding="24,12,24,0">
-                    <Label
-                        FontAttributes="Bold"
-                        FontSize="20"
-                        Text="Первый шаг - переменные"
-                        TextColor="DeepPink" />
-                    <Label
-                        FontAttributes="Bold"
-                        FontSize="20"
-                        Text="Второй шаг - условие сходимости"
-                        TextColor="DeepPink" />
-                    <Label
-                        FontAttributes="Bold"
-                        FontSize="20"
-                        Text="Третий шаг - действие по методу"
-                        TextColor="DeepPink" />
-                </StackLayout>
                 <StackLayout>
-                    <Label Text="" />
+                    <StackLayout.Resources>
+                        <Style TargetType="Label">
+                            <Setter Property="TextColor" Value="White" />
+                            <Setter Property="FontSize" Value="16" />
+                        </Style>
+                    </StackLayout.Resources>
+                    <StackLayout x:Name="step1Stack" Padding="24,12,24,0">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            Text="Первый шаг - переменные"
+                            TextColor="DeepPink" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            Text="Второй шаг - условие сходимости"
+                            TextColor="DeepPink" />
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            Text="Третий шаг - действие по методу"
+                            TextColor="DeepPink" />
+                    </StackLayout>
+                    <StackLayout>
+                        <Label Text="" />
+                    </StackLayout>
                 </StackLayout>
             </StackLayout>
-        </StackLayout>
-    </ScrollView>
+        </ScrollView>
+    </Grid>
 </ContentPage>

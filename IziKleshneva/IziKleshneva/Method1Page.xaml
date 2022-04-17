@@ -4,6 +4,8 @@
              x:Class="IziKleshneva.Method1Page"
              Title="Метод половинного деления"
              Shell.NavBarIsVisible="False">
+    <Grid>
+        
     <ScrollView  x:Name="scroll" BackgroundColor="#333333">
 
         <StackLayout Spacing="0">
@@ -19,7 +21,7 @@
                                     <ColumnDefinition Width="0.15*"/>
                                     <ColumnDefinition Width="0.25*"/>
                                 </Grid.ColumnDefinitions>
-                                <Entry x:Name="txtEquation" BackgroundColor="White" TextColor="Black" Grid.Column="0" Keyboard="Plain"  TextChanged="txtEquation_TextChanged" PlaceholderColor="#FFFFFF" Margin="0,0,-10,0"/>
+                                <Entry Text="2x^2+5x-10" x:Name="txtEquation" BackgroundColor="White" TextColor="Black" Grid.Column="0" Keyboard="Plain"  TextChanged="txtEquation_TextChanged" PlaceholderColor="#FFFFFF" Margin="0,0,-10,0"/>
                                 <Label Text="= 0" VerticalOptions="Center" HorizontalOptions="Center" TextColor="Black" Grid.Column="1" FontSize="18" Margin="0, 1, 0, 0"/>
                                 <Button  Clicked="Solve_Click" Text="=>" CornerRadius="0" TextColor="White" BackgroundColor="DeepPink" Grid.Column="2"/>
                             </Grid>
@@ -36,9 +38,9 @@
                         </Grid.ColumnDefinitions>
                         <StackLayout Orientation="Horizontal">
                             <Label Text="[" TextColor="White" FontSize="30" VerticalTextAlignment="Center" />
-                            <Entry x:Name="txtInterval1" TextColor="White"  Keyboard="Numeric" HorizontalOptions="FillAndExpand" MaxLength="4" HorizontalTextAlignment="Center"/>
+                            <Entry Text="1" x:Name="txtInterval1" TextColor="White"  Keyboard="Numeric" HorizontalOptions="FillAndExpand" MaxLength="4" HorizontalTextAlignment="Center"/>
                             <Label Text=";" TextColor="White" FontSize="30" VerticalTextAlignment="Center" />
-                            <Entry x:Name="txtInterval2" TextColor="White"  Keyboard="Numeric" HorizontalOptions="FillAndExpand" MaxLength="4" HorizontalTextAlignment="Center"/>
+                            <Entry Text="2" x:Name="txtInterval2" TextColor="White"  Keyboard="Numeric" HorizontalOptions="FillAndExpand" MaxLength="4" HorizontalTextAlignment="Center"/>
                             <Label Text="]" TextColor="White" FontSize="30" VerticalTextAlignment="Center" />
                         </StackLayout>
                         <StackLayout Orientation="Horizontal" Grid.Column="1">
@@ -81,4 +83,5 @@
             </StackLayout>
         </StackLayout>
     </ScrollView>
+    </Grid>
 </ContentPage>

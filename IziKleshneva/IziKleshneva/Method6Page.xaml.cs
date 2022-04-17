@@ -168,7 +168,7 @@ namespace IziKleshneva
         {
             if (e.NewTextValue.Length == 0) return;
             txtEquation.Text = e.NewTextValue;
-            char[] symbols = { '^', '*', '/', '.', ',', '+', '=', '-', 'x', 'y', 'c', 's', 'o', 'i', 'n', 't', 'g', 'a', '(', ')' };
+            char[] symbols = { '^', '*', '/', '.', ',', '+', '=', '-', 'x', 'y', 'c', 's', 'o', 'i', 'n', 't', 'g', 'a', 's', 'q', 'r', 't', '(', ')' };
             for (int i = 0; i < txtEquation.Text.Length; i++)
             {
                 if (char.IsDigit(txtEquation.Text[i])) continue;

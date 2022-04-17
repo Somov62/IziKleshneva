@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="IziKleshneva.Method7Page"
             Shell.NavBarIsVisible="False">
-    
+
+    <Grid>
+        
     <ScrollView x:Name="scroll" BackgroundColor="#333333">
         <StackLayout Spacing="0">
             <Frame
@@ -205,6 +207,8 @@
                 </Frame>
             </Frame>
             <ScrollView Orientation="Horizontal" VerticalOptions="FillAndExpand">
+                <Grid>
+                    
                 <StackLayout x:Name="stackParent"  Padding="24,12,24,0">
                     <StackLayout.Resources>
                         <Style TargetType="Label">
@@ -247,7 +251,9 @@
                         <Label Text="{Binding Path=Children.Count}" />
                     </StackLayout>
                 </StackLayout>
+                </Grid>
             </ScrollView>
         </StackLayout>
     </ScrollView>
+    </Grid>
 </ContentPage>

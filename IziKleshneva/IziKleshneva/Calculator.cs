@@ -12,6 +12,7 @@ namespace IziKleshneva
             primer = primer.Replace(" ", "");
             primer = primer.Replace("_", " ");
             primer = primer.Replace(":", "÷");
+            primer = primer.Replace("/", "÷");
             //primer = primer.Replace(".", ",");
             primer = primer.Replace("π", Math.PI.ToString());
             try
@@ -108,12 +109,7 @@ namespace IziKleshneva
                 int znakIndex = primer.IndexOf("^");
                 int leftBorder = LeftBorderIndex(ref primer, znakIndex);
                 primer = NewPrimer(primer, leftBorder, znakIndex, out decimal fNum, out decimal sNum);
-                decimal result = 1;
-                for (int i = 0; i < sNum; i++)
-                {
-                    result *= fNum;
-                }
-                primer = primer.Insert(leftBorder, result.ToString());
+                primer = primer.Insert(leftBorder, Math.Pow((double)fNum, (double)sNum).ToString());
             }
 
             //решаем умножение/деление

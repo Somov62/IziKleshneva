@@ -4,6 +4,8 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     Shell.NavBarIsVisible="False">
+    <Grid>
+        
     <ScrollView x:Name="scroll" BackgroundColor="#333333">
         <StackLayout Spacing="0">
             <Frame
@@ -210,4 +212,5 @@
             </StackLayout>
         </StackLayout>
     </ScrollView>
+    </Grid>
 </ContentPage>
